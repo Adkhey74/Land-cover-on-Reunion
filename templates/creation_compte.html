@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création compte</title>
+    <link rel="icon" href="../app/static/table-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="flex items-center justify-center" style="height: 80vh">
+        <div class="w-full max-w-xs">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" method="POST">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-4">Création du compte</h1>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="nom">
+                Nom
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nom" name="nom" type="text" placeholder="Nom">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="prenom">
+                Prénom
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="prenom" name="prenom" type="text" placeholder="Prénom">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                Email
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="Email">
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                Mot de passe
+                </label>
+                <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="******************">
+                <p class="text-red-500 text-xs italic">Choisissez un mot de passe s'il vous plaît.</p>
+            </div>
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Créer
+                </button>
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/connexion_compte.html">
+                    Connexion
+                    </a>
+            </div>
+            </form>
+            <p class="text-center text-white-500 text-xs">
+            &copy;2023 IUT Annecy. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

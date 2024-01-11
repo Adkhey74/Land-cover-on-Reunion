@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info compte</title>
+    <link rel="icon" href="../app/static/table-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="flex items-center justify-center mt-12" style="height: fit-content">
+        <div class="w-full ">
+            <form class="  rounded px-8 pt-6 pb-8 mb-4" method="POST">
+                <div class="mb-3 mt-5 ">
+                    <div class="input-group">
+                         <span class="input-group-text w-52" for="image_height"> Nom</span>
+                         <input type="text" class="form-control " style="width: 85vw;" name="pixel_resoltion" id="pixel_resoltion" value="{{ session['user']['nom'] }}"
+                         required disabled>
+                        
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+ 
+                        <span class="input-group-text w-52" for="image_width">Prenom</span>
+                        <input type="text" class="form-control " style="width: 85vw;" name="pixel_resoltion" id="pixel_resoltion" value="{{ session['user']['prenom'] }}"
+                            required disabled>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+ 
+                        <span class="input-group-text w-52" for="pixel_resoltion">Adresse email</span>
+                        <input type="text" class="form-control " style="width: 85vw;" name="pixel_resoltion" id="pixel_resoltion" value="{{ session['user']['email'] }}"
+                            required disabled>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+ 
+                        <span class="input-group-text w-52" for="pixel_resoltion">Mot de passe</span>
+                        <input type="password" class="form-control" name="pixel_resoltion" id="pixel_resoltion" value="********"
+                            required disabled>
+                    </div>
+                </div>
+
+                <div class="mb-3 w-full">
+                    <div class="input-group flex justify-center">
+                        <a href="{{ url_for('deconnexion_compte') }}" class="btn btn-danger w-fit"> <i class="bi bi-box-arrow-left"></i> Deconnexion</a>
+                    </div>
+                </div>
+            </form>
+            <p class="text-center text-white-500 text-xs">
+            &copy;2023 IUT Annecy. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

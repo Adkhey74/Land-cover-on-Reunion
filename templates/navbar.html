@@ -1,0 +1,146 @@
+<nav class="navbar  bg-gradient-to-r from-blue-200 to-pink-200 h-fit   border-bottom border-body" data-bs-theme="dark" style="height: 7vh; width: 100%;">
+  <ul class="nav nav-pills mb-sm-auto align-items-center mt-2 align-items-sm-start  mx-2" id="menu">
+    <li class="nav-item border-r ">
+      <a href="{{ url_for('home') }}" class="nav-link align-middle {% if active_page == 'acceuil.html' %}text-black bg-light rounded{% else %}text-black{% endif %}">
+        <i class="bi bi-house-door-fill"></i> <span class="ms-1 d-none d-sm-inline"><strong>Home</strong></span>
+      </a>
+    </li>
+
+    <li>
+      <a href="{{ url_for('dataset') }}" class="nav-link align-middle {% if active_page == 'dataset.html' %}text-primary bg-light rounded {% else %}text-primary{% endif %}">
+        <i class="bi bi-database bi-lg"></i> <span class="ms-1 d-none d-sm-inline"><strong>Dataset </i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'dataset.html' %}text-white {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong> <i class="bi bi-arrow-right"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'create_model.html' %}text-black bg-light rounded {% else %}text-black{% endif %}"  >
+        <i class="bi bi-plus-circle"></i> <span class="ms-1 d-none d-sm-inline" ><strong>Create Model </i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'create_model.html' %}text-white {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong> <i class="bi bi-arrow-right"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'training.html' %}text-black bg-light rounded {% else %}text-black{% endif %}"  >
+        <i class="fa-solid fa-person-running"></i> <span class="ms-1 d-none d-sm-inline" ><strong>Training </i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'training.html' %}text-black {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong><i class="fa-solid fa-grip-lines-vertical"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('model') }}" class="nav-link align-middle {% if active_page == 'model.html' %}text-primary bg-light rounded {% else %}text-primary{% endif %}" >
+        <i class="bi bi-table"></i> <span class="ms-1 d-none d-sm-inline"><strong>Model </i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'model.html' %}text-white {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong> <i class="bi bi-arrow-right"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'images.html' %}text-black bg-light rounded {% else %}text-black{% endif %}" >
+        <i class="fa-solid fa-image"></i><span class="ms-1 d-none d-sm-inline"><strong>Pictures </i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'images.html' %}text-white {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong> <i class="bi bi-arrow-right"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="" class="nav-link align-middle {% if active_page == 'inference.html' %}text-black bg-light rounded {% else %}text-black{% endif %}">
+        <i class="bi bi-graph-up"></i> <span class="ms-1 d-none d-sm-inline"><strong>Inference </strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link align-middle {% if active_page == 'create_model.html' %}text-black {% else %}text-black{% endif %}"  >
+        <span class="ms-1 d-none d-sm-inline" ><strong><i class="fa-solid fa-grip-lines-vertical"></i></strong></span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('gallery') }}" class="nav-link align-middle {% if active_page == 'gallery.html' %}text-primary bg-light rounded {% else %}text-primary{% endif %}">
+        <i class="bi bi-images"></i> <span class="ms-1 d-none d-sm-inline"><strong>Photo gallery </strong></span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="nav nav-pills mb-sm-auto align-items-center align-items-sm-end " id="menu">
+    {% if 'connection' in session %}
+
+    <li>    
+      <a href="{{ url_for('info_compte') }}" class="nav-link align-middle text-xl m-0 pt-0 pb-0 pl-8 text-white">
+        <i class="bi bi-person-circle"></i>
+      </a>      
+      <span class="nav-link align-middle  text-white pl-0 pt-0 pb-0">{{ session['user']['prenom'] }} {{ session['user']['nom'] }}</span>
+    </li>
+
+    {% else %}
+    <li>
+      <a href="{{ url_for('connexion_compte') }}" class="nav-link align-middle text-2xl text-white">
+        <i class="bi bi-person-circle"></i></span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+
+</nav> 
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+        <div class="flash-message flash-{{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+
+<style>
+.flash-messages {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 600px;
+  z-index: 1000;
+  text-align: center;
+  margin-top: 5vh;
+}
+
+.flash-message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.flash-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.flash-error {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.flash-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+</style>

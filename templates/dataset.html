@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset</title>
+    <link rel="icon" href="../app/static/database-solid.svg" type="image/x-icon">
+
+    {% include 'link.html' %}
+
+
+
+
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="margin-top:20vh ;">
+            <div class="modal-header">
+                <!-- <h1 class="text-white text-2xl"> <i class="bi bi-database bi-lg"></i> Dataset</h1> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+            </div>
+            <div class="modal-body">
+                <!-- Formulaire -->
+                <form method="POST">
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info "  data-container="body" data-toggle="tooltip" data-placement="top" title="Image Height: The vertical dimension or the number of pixels in an image."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                            <span class="input-group-text w-52" for="image_height">Image height:</span>
+                            <input type="text" class="form-control" name="image_height" id="image_height"
+                                oninput="validateNumberInput(this)" value=25 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Image Width: The horizontal dimension or the number of pixels in an image."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                            <span class="input-group-text w-52" for="image_width">Image width :</span>
+                            <input type="text" class="form-control" name="image_width" id="image_width"
+                                oninput="validateNumberInput(this)" value=25 required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Pixel Resolution: Refers to the total number of pixels in an image, calculated by multiplying the image's height and width."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                            <span class="input-group-text w-52" for="pixel_resoltion">Pixel resoltion :</span>
+                            <input type="text" class="form-control" name="pixel_resoltion" id="pixel_resoltion" value=2
+                                required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Frame Height: In certain contexts like video processing, it refers to the height or size of a single frame in a sequence of video frames."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                            <span class="input-group-text w-52" for="f_height">Frame height :</span>
+                            <input type="text" class="form-control" name="f_height" id="f_height"
+                                oninput="validateNumberInput(this)" value=0 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Frame Width: Similar to frame height, it refers to the width or size of a single frame in a sequence of video frames."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                            <span class="input-group-text w-52" for="f_width">Frame width :</span>
+                            <input type="text" class="form-control" name="f_width" id="f_width"
+                                oninput="validateNumberInput(this)" value=0 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Tile Ratio: The ratio between the dimensions of individual tiles or sections within an image or display."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                            <span class="input-group-text w-52" for="tile_ratio">Tile ratio :</span>
+                            <input type="text" class="form-control" name="tile_ratio" id="tile_ratio"
+                                oninput="validateNumberInput(this)" value=0.9 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Filter Size: In the context of image processing or neural networks, it represents the dimensions of the filter or kernel used for convolution operations."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                            <span class="input-group-text w-52" for="filter_size">Filter size :</span>
+                            <input type="text" class="form-control" name="filter_size" id="filter_size"
+                                oninput="validateNumberInput(this)" value=3 required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Pool Size: In neural networks, specifically in pooling layers, it signifies the size of the pooling window used to downsample the input, reducing its spatial dimensions."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                            <span class="input-group-text w-52" for="pool_size">Pool size :</span>
+                            <input type="text" class="form-control" name="pool_size" id="pool_size"
+                                oninput="validateNumberInput(this)" value=2 required>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn bg-green-500 text-white hover:bg-green-600 w-14"><i
+                        class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        $(document).ready(function () {
+            $('.info').click(function (event) {
+                event.preventDefault();
+            });
+            // $('.info').hover(
+            //     function () {
+
+            //     }
+            // )
+        });
+        function validateNumberInput(input) {
+            // Remplace tous les caractères qui ne sont pas des chiffres par une chaîne vide
+            input.value = input.value.replace(/[^0-9.]/g, '');
+        }
+    
+    </script>
+
+
+
+
+
+
+</body>
+
+
+</html>

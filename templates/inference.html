@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inference</title>
+    <link rel="icon" href="../app/static/graph-up.svg" type="image/x-icon">
+    {% include 'link.html' %}
+
+
+
+
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+      <div class="top-20 grid-cols-3 gap-48  flex flex-wrap justify-center relative " style="height: fit-content; max-width: 100vw; max-height: 80vh; ">
+        <a href="">
+            <div class="h-80 w-80 bg-white rounded mb-12">
+                <div class="w-full h-10 justify-center flex block border-bottom border-black items-center">
+                    <span class="text-black">{{ model }}</span>
+                </div>
+                <!-- <div class="w-full h-10 justify-center flex ">
+                    <span class="text-black">Description</span>
+                </div> -->
+                <div class="w-full h-10 justify-center flex ">
+                    <p class="text-black text-xs p-2">
+                        {{ description }}
+                    </p>
+                </div>
+            </div>
+        </a>
+    
+        <a href=""><img class="h-80 w-80 bg-white rounded" 
+
+        src="data:image/png;base64,{{ encode_image }}" alt="TIF Image"></a>
+
+        <form method="POST">
+            <button type="submit" class="btn btn-primary h-10 mt-36" id="start">start inference</button>
+        </form>
+    
+    
+
+
+
+
+
+    </div>
+    
+    <div class="  ml-2 mb-3 d-flex ">
+        
+    </div>
+
+    <div class="progress" style="margin-top: 20vh; width: 50%; height: 30px; margin-left: auto; margin-right: auto;">
+        <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span id="progressText"></span>
+        </div>
+    </div>
+    
+  
+</body>
+<script>
+    function updateProgress() {
+        axios.get('/progress', { params: { "t": new Date().getTime() } })
+            .then(response => {
+                const data = response.data;
+                document.getElementById('progressBar').style.width = data.progress + '%';
+                let progressText = document.getElementById('progressText');
+                progressText.textContent = data.progress.toFixed(2) + '%';
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+
+    let button = document.querySelector("#start");
+
+    button.addEventListener("click", function() {
+        // Mettre à jour toutes les X secondes
+        setInterval(updateProgress, 1000);
+    });
+
+
+</script>
+</html>

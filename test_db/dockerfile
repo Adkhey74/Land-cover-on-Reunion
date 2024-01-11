@@ -1,0 +1,19 @@
+# Utiliser une image Python de base plus complète
+FROM python:3.8
+
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /app
+
+# Installer les dépendances système requises pour certaines bibliothèques
+RUN apt-get update && apt-get install -y \
+    libgdal-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Définir les variables d'environnement pour GDAL
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
+
+# Installer les dépendances Python
+RUN pip install GDAL==$(gdal-config --version) # Assurez-vous que la version de GDAL correspond
+RUN pip install azure-storage-blob

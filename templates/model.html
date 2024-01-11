@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model</title>
+    <link rel="icon" href="../app/static/table-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+
+
+
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="grid grid-cols-3 w-full gap-4 ">
+        
+
+        <div class="flex justify-center w-screen col-span-2" style="height: 94vh; max-height: 94vh;   overflow-y: auto; ">
+            <div class="grid grid-rows-4 grid-flow-col mt-5 flex justify-center gap-96">
+                <div class=" grid grid-cols-3 gap-32 flex justify-center w-fit h-fit">
+                {% for model_file in list_of_model_files %}
+                    <a href="{{ url_for('images', values=values,model=model_file.chemin) }}">
+                        <div class="h-80 w-80 bg-white rounded hover:scale-110 mb-12">
+                            <div class="w-full h-10 justify-center flex block border-bottom border-black items-center">
+                                <span class="text-black">{{ model_file.model_name }}</span>
+                            </div>
+                            <!-- <div class="w-full h-10 justify-center flex ">
+                                <span class="text-black">Description</span>
+                            </div> -->
+                            <div class="w-full h-10 justify-center flex ">
+                                <p class="text-black text-xs p-2">
+                                    {{ model_file.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+
+                    
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

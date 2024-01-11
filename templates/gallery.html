@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="icon" href="../app/static/database-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="grid grid-cols-3 gap-4">
+        <div class="w-full" style="height: 92.9vh;">
+            <img class="" src="../static/image.png" alt="" style="height: 93vh">
+        </div>
+
+        <div class="flex justify-center col-span-2 overflow-auto" style="height: 80vh;">
+            <div class="mt-5">
+                <div class="grid grid-cols-4 gap-12">
+                    {% for img_encode in images_encodes %}
+                    <div>
+                        <h1>{{ img_encode[2] }}</h1>
+                        <div class="flip-card h-60 w-60" style="border: none;">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img class="h-60 w-60 bg-white rounded "
+                                        src="data:image/png;base64,{{ img_encode[0] }}" alt=""
+                                        onclick="openModal('{{ img_encode[1] }}')">
+                                </div>
+                                <div class="flip-card-back">
+                                    <img class="h-60 w-60 bg-white rounded "
+                                        src="data:image/png;base64,{{ img_encode[1] }}" alt=""
+                                        onclick="openModal('{{ img_encode[1] }}')">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center mt-2">
+                            <a href="#" class="btn btn-primary download-btn" data-img="{{ img_encode[0] }}"><i
+                                    class="bi bi-download"></i> PNG</a>
+                            <a href="#" class="btn btn-success download-btn-tiff ml-2" data-img="{{ img_encode[0] }}"><i
+                                    class="bi bi-download"></i> TIFF</a>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img class="modal-content" id="modalImage" style="height: 50vh; width: 50vh;">
+        </div>
+
+        <!-- Include tiff.js -->
+        <script src="https://cdn.jsdelivr.net/npm/tiff@5.0.3/dist/tiff.min.js"></script>
+        <script>
+            function openModal(imgEncode) {
+                const modal = document.getElementById('myModal');
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = 'data:image/png;base64,' + imgEncode;
+                modal.style.display = 'flex';
+            }
+
+            function closeModal() {
+                const modal = document.getElementById('myModal');
+                modal.style.display = 'none';
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const downloadButtons = document.querySelectorAll('.download-btn');
+                const tiffButtons = document.querySelectorAll('.download-btn-tiff');
+                const rotateButtons = document.querySelectorAll('.rotate-btn');
+                rotateButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var element =document.querySelector(".flip-card")
+                    });
+                });
+
+                downloadButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        const imgEncode = this.getAttribute('data-img');
+                        console.log('Base64 Image:', imgEncode);
+                        downloadImage(imgEncode);
+                    });
+                });
+
+                tiffButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        const imgEncode = this.getAttribute('data-img');
+                        console.log('Base64 Image for TIFF:', imgEncode);
+                        downloadTiff(imgEncode);
+                    });
+                });
+
+                function downloadTiff(imgEncode) {
+                    // Envoyer la base64 au serveur
+                    fetch('/convert', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ imgEncode }),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Télécharger le fichier TIFF à partir du lien renvoyé par le serveur
+                            window.location.href = data.tiffUrl;
+                        })
+                        .catch(error => {
+                            console.error('Erreur lors de la conversion et du téléchargement :', error);
+                        });
+                }
+
+                function downloadImage(imgEncode) {
+                    try {
+                        // Convertir la base64 en blob
+                        const byteCharacters = atob(imgEncode);
+                        const byteNumbers = new Array(byteCharacters.length);
+
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                        }
+
+                        const byteArray = new Uint8Array(byteNumbers);
+                        const blob = new Blob([byteArray], { type: 'image/png' });
+
+                        // Créer un objet URL pour le blob
+                        const url = URL.createObjectURL(blob);
+
+                        // Créer un lien de téléchargement
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'image.png';
+
+                        // Ajouter le lien au document et déclencher le téléchargement
+                        document.body.appendChild(a);
+                        a.click();
+
+                        // Nettoyer
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } catch (error) {
+                        console.error('Erreur lors du téléchargement :', error);
+                    }
+                }
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images</title>
+    <link rel="icon" href="../app/static/table-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+
+
+
+</head>
+
+<body style="margin: 0;">
+    {% include 'navbar.html' %}
+
+    <h1 class="text-center text-4xl font-bold">Sélectionnez une image pour l'inférences</h1>
+    <div class="absolute" style="top: 35%; left: 1%;">
+        <div class="flex justify-center w-full">
+            <a href="{{ url_for('inference', model=model,image_extract=tiff_path) }}"><img src="data:image/png;base64,{{ image_extract }}" class="bg-white rounded hover:scale-110  " alt="" style="height: 20vh; width: 20vh; "></a>
+
+        </div>
+        <h1 class="text-center text-xl font-bold">Image de test ultra haute résolution</h1>
+
+
+    </div>
+
+    <div class="flex justify-center" style="height: 80vh;   overflow-y: auto; ">
+        
+        <div class="flex justify-start   grid grid-rows-2 grid-flow-col gap-4" >
+            <div>
+
+
+                <div class="mt-4">
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="grid grid-rows-4 grid-flow-col mt-5 ml-20 gap-96">
+
+            <div class=" grid grid-cols-4 gap-14 h-fit" id="image-container">
+
+
+
+            </div>
+
+        </div>
+        <div class="flex justify-center absolute" style="width:100%; bottom: 5%;">
+            <select name="dimension_image" id="dimension_image" class="form-select h-10 w-60">
+                <option value="1600">1600</option>
+
+                <option value="800">800</option>
+
+
+                <div class="flex justify-center  h-fit" style="   overflow-y: auto; ">
+
+                    <div class="grid grid-rows-4 grid-flow-col mt-5  gap-96">
+
+
+
+
+
+            </select>
+            <a href="{{ url_for('update_image_start_precedent') }}" class="h-10 ml-2 mr-2 w-fit btn btn-success"><i
+                    class="bi bi-arrow-left-circle-fill"></i></a>
+            <a href="{{ url_for('update_image_start_suivant') }}" class="h-10 w-fit btn btn-primary"><i
+                    class="bi bi-arrow-right-circle-fill"></i></a>
+        </div>
+    </div>
+
+</body>
+<script>
+    let eventSource = null
+
+    $("#dimension_image").change(function () {
+        $("#image-container").empty();
+        eventSource.close()
+        updateImages($("#dimension_image").val());
+    });
+
+
+    const container = document.getElementById('image-container');
+
+    // Fonction pour mettre à jour progressivement les images côté client
+    function updateImages(dimension_img) {
+        console.log(dimension_img)
+        totalImagesDownloaded = 0;
+        
+        var host = window.location.hostname;
+        eventSource = new EventSource(`http://${host}:5000/update_images?dimension_img=${dimension_img}`);
+
+        eventSource.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+
+
+
+
+
+
+            // Parcourez les nouvelles images et ajoutez-les à la page
+            data.image_paths.forEach((image, index) => {
+                // N'ajoutez que les 8 premières images
+                if (totalImagesDownloaded < 8) {
+                    const oneImage = document.createElement('div');
+
+                    const linkElement = document.createElement('a');
+                    console.log(image.path)
+                    console.log(image)
+
+                    const imagePath = image.path;
+                    linkElement.href = `{{ url_for('inference', model=model) }}&numero_image=${image.path}&dimension_img=${dimension_img}`;
+
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `data:image/png;base64,${image.encoded_image}`;
+                    imgElement.alt = 'TIF Image';
+                    imgElement.className = 'bg-white rounded hover:scale-110';
+                    imgElement.style.height = '20vh';
+                    imgElement.style.width = '20vh';
+
+                    const coordinateElement = document.createElement('p');
+                    const longitude = data.gmap.longitude;
+                    const latitude = data.gmap.latitude;
+                    coordinateElement.innerHTML = "<strong>Longitude </strong>= " + longitude + "<br> <strong>Latitude</strong> = " + latitude;
+
+                    const gMapElement = document.createElement('a');
+                    const linkGmap = data.gmap.link;
+                    gMapElement.href = linkGmap;
+                    gMapElement.textContent = "Lien google map";
+                    gMapElement.className = 'btn btn-primary';
+                    gMapElement.target = '_blank';
+
+                    linkElement.appendChild(imgElement);
+                    oneImage.appendChild(linkElement);
+                    oneImage.appendChild(coordinateElement);
+                    oneImage.appendChild(gMapElement);
+                    container.appendChild(oneImage);
+                }
+                totalImagesDownloaded++;
+            });
+
+
+            // Vérifiez si le traitement est complet
+            if (event.data.includes('complete')) {
+                eventSource.close();  // Fermez la connexion SSE
+            }
+        };
+    }
+
+    // Appelez la fonction pour mettre à jour progressivement les images
+    updateImages($("#dimension_image").val());
+</script>
+
+</html>

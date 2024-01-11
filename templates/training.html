@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training</title>
+    <link rel="icon" href="../app/static/table-solid.svg" type="image/x-icon">
+    {% include 'link.html' %}
+
+
+
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="margin-top:10vh ;">
+            <div class="modal-header">
+                <!-- <h1 class="text-white text-2xl"> <i class="bi bi-database bi-lg"></i> Dataset</h1> -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+            </div>
+            <div class="modal-body">
+                <!-- Formulaire -->
+                <form method="POST">
+                    <div class="mb-3">
+
+                        <h1 class="mb-1">Model name </h1>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Model Name: The name or identifier given to a specific machine learning or deep learning model."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-52" for="model_name">Model name</span>
+                                <input type="text" class="form-control" name="model_name" id="model_name"
+
+                                     placeholder="bestModel" required>
+
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                        <h1 class="mb-1">Model description</h1>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Model Description: A brief overview or summary detailing the architecture, components, and purpose of the machine learning model."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-52" for="model_description">Model description</span>
+                                <input type="text" class="form-control" name="model_description" id="model_description" required>
+
+                            </div>
+                        </div>
+
+                        <h1 class="mb-1">Early stopping </h1>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Patience: The number of epochs the training will continue without improvement in the monitored metric before stopping."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-52" for="patience_early_stopping">Patience</span>
+                                <input type="text" class="form-control" name="patience_early_stopping" id="patience_early_stopping"
+                                    oninput="validateNumberInput(this)" value=5 required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Restore Best Weights: Restores the model's weights to the configuration that achieved the best performance on the monitored metric during training."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="">Restore best weights</span>
+                                <select name="restore_best_weights" id="restore_best_weights" class="form-select">
+                                    <option value="true">true</option>
+                                    <option value="false">false</option>
+                                    
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Min Delta: The minimum change required in the monitored metric to qualify as an improvement."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="min_delta_early_stopping">Min delta</span>
+                                <input type="text" class="form-control" name="min_delta_early_stopping" id="min_delta_early_stopping" value=0.0001
+                                    required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Mode: Refers to whether the monitored quantity should be increasing, decreasing, or staying constant for improvement."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="mode">Mode</span>
+                                <select name="mode" id="mode" class="form-select">
+                                    <option value="min">max</option>
+                                    <option value="auto">auto</option>
+                                    <option value="min">min</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h1 class="mb-1">Reduce lr  </h1>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Factor: The factor by which the learning rate will be reduced."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="factor">Factor</span>
+                                <input type="text" class="form-control" name="factor" id="factor"
+                                    oninput="validateNumberInput(this)" value=0.1 required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Patience: The number of epochs with no improvement after which the learning rate will be reduced."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="patience_reduce_lr">Patience</span>
+                                <input type="text" class="form-control" name="patience_reduce_lr" id="patience_reduce_lr"
+                                    oninput="validateNumberInput(this)" value=5 required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Min LR: The lower bound for the learning rate."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-52" for="min_lr_reduce_lr">Min lr</span>
+                                <input type="text" class="form-control" name="min_lr_reduce_lr" id="min_lr_reduce_lr"
+                                    oninput="validateNumberInput(this)" value=0.00001 required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Min Delta: The minimum change required in the quantity monitored to qualify as an improvement before reducing the learning rate."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-52" for="min_delta"> Min delta</span>
+                                <input type="text" class="form-control" name="min_delta" id="min_delta"
+                                    oninput="validateNumberInput(this)" value=0.0001 required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h1 class="mb-1">Fit  </h1>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Epochs: A full pass of the entire training dataset through the neural network during the training process. One epoch consists of multiple iterations (batches) based on the dataset size and training configuration."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+
+                                <span class="input-group-text w-52" for="epochs">Epochs </span>
+                                <input type="text" class="form-control" name="epochs" id="epochs"
+                                    oninput="validateNumberInput(this)" value=100 required>
+                            </div>
+
+                    </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn bg-green-500 text-white hover:bg-green-600 w-14" id="start"><i
+                        class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- Titre de la première barre de progression -->
+                <h2 class="text-center my-4">Extraction des données d'entrainement</h2>
+    
+                <!-- Première barre de progression -->
+                <div class="progress" style="height: 30px;">
+                    <div id="progressBar" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                        <span id="progressText"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-col justify-center items-center mb-10" style="display: none;" id="spin">
+        <!-- Titre de la deuxième barre de progression -->
+        <h2 class="text-center my-4">Entraînement du modèle</h2>
+                    
+        <div class="flex justify-center items-center mb-10">
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Loading...
+              </button>
+        </div>
+    </div>
+    
+    
+    
+    
+
+</body>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    function updateProgress() {
+        axios.get('/progress_model_creation', { params: { "t": new Date().getTime() } })
+            .then(response => {
+                const data = response.data;
+                document.getElementById('progressBar').style.width = data.progress + '%';
+                let progressText = document.getElementById('progressText');
+                progressText.textContent = data.progress.toFixed(2) + '%';
+
+                if (data.spin_active) {
+                    element = document.getElementById('spin');
+                    element.style.display = 'block';
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+    $(document).ready(function () {
+        $('.info').click(function (event) {
+            // Empêchez l'action par défaut du lien
+            event.preventDefault();
+        });
+    });
+    let button = document.querySelector("#start");
+
+    button.addEventListener("click", function() {
+        setInterval(updateProgress, 1000);
+    });
+
+    function validateNumberInput(input) {
+        // Remplace tous les caractères qui ne sont pas des chiffres par une chaîne vide
+        input.value = input.value.replace(/[^0-9.]/g, '');
+    }
+
+
+</script>
+
+</html>

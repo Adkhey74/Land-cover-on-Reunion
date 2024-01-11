@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset</title>
+    <link rel="icon" href="../app/static/database-solid.svg" type="image/x-icon">
+
+    {% include 'link.html' %}
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+    <div class="grid grid-cols-3 gap-4 ">
+        <div class="w-full   bg-stone-500 h-94">
+
+
+
+
+            <div class="col-12  ml-3 mt-12 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="img_height">Image height :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.image_height }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="img_width">Image width :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.image_width }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="pixelRes">Pixel resoltion :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.pixel_resoltion }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="frame_height">Frame height:</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.f_height }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="frame_height">Frame width :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.f_width }}</span>
+                </div>
+            </div>
+
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="img_width">Tile ratio :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.tile_ratio }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="img_width">Filter size :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.filter_size }}</span>
+                </div>
+            </div>
+            <div class="col-12  ml-3 mb-3 d-flex ">
+                <div class="input-group">
+                    <span class="input-group-text w-1/3" for="img_width">Pool size :</span>
+                    <span class="input-group-text w-1/2" for="vectorFormat">{{ values.pool_size }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center col-span-2 overflow-auto" style="height: 94vh; max-height: 94vh;">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="margin-top:3vh;">
+                    <div class="modal-header">
+                        <!-- <h1 class="text-white text-2xl"> <i class="bi bi-database bi-lg"></i> Dataset</h1> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulaire -->
+                        <form method="POST" id="datasetForm">
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Number of Layers: Refers to the count of individual layers (e.g., input layer, hidden layers, output layer) in a neural network architecture."> <i
+                                        class="fa-solid fa-circle-info"></i></button>
+                                    <span class="input-group-text w-96" for="nombre_couche">Number of layers</span>
+                                    <select name="nombre_couche" id="nombre_couche" class="form-select">
+                                        <!-- <option value=""disabled></option> -->
+                                        {% for i in range(1, 11) %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Optimizer: An algorithm used during the training of a neural network to adjust the attributes (like weights and learning rate) to minimize the loss function and improve the model's performance."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-96" for="optimizer">Optimizer</span>
+                                <select name="optimizer" id="optimizer" class="form-select"></select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Loss Functions: A function that quantifies the difference between predicted values and actual values during model training. It measures how well the model is performing."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-96" for="loss">Loss functions</span>
+                                <select  name="loss" id="loss" class="form-select"></select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Metrics: These are measurements used to evaluate the performance of a machine learning model. Metrics can include accuracy, precision, recall, F1 score, etc."> <i
+                                    class="fa-solid fa-circle-info"></i></button>
+                                <span class="input-group-text w-96" for="metrics">Metrics</span>
+                                <select name="metrics" id="metrics" class="form-select"></select>
+                            </div>
+                            <div id="dynamicInputs"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn bg-green-500 text-white hover:bg-green-600">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Data
+                        </button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+            $(document).ready(function () {
+
+                var optimizer = ["adam","sgd","rmsprop", "adagrad", "adadelta", "adamax", "nadam", "ftrl"];
+                var loss_functions = ["binary_crossentropy", "categorical_crossentropy", "sparse_categorical_crossentropy", "mean_squared_error", "mean_absolute_error", "mean_absolute_percentage_error", "mean_squared_logarithmic_error", "cosine_similarity", "huber", "logcosh"]
+                var metrics = ["accuracy", "binary_accuracy", "categorical_accuracy", "sparse_categorical_accuracy", "mean_squared_error", "root_mean_squared_error", "mean_absolute_error", "mean_absolute_percentage_error", "cosine_similarity", "auc", "precision", "recall"]
+                // Sélectionner l'élément <select> avec jQuery
+                var selectElementOptimizer = $("#optimizer");
+                var selectElementloss_functions = $("#loss");
+                var selectElementMetrics = $("#metrics");
+
+
+
+                // Remplir le <select> avec les options du tableau
+                $.each(optimizer, function (index, value) {
+                    selectElementOptimizer.append($("<option>").text(value).val(value));
+                });
+                $.each(loss_functions, function (index, value) {
+                    selectElementloss_functions.append($("<option>").text(value).val(value));
+                });
+                $.each(metrics, function (index, value) {
+                    selectElementMetrics.append($("<option>").text(value).val(value));
+                });
+                // Gérer le changement de la valeur du sélecteur
+                $('#nombre_couche').on('change', function () {
+                    var selectedValue = $(this).val();
+                    generateDynamicInputs(selectedValue);
+                });
+
+                // Fonction pour générer les div input-group dynamiquement
+                function generateDynamicInputs(count) {
+                    var dynamicInputsDiv = $('#dynamicInputs');
+                    dynamicInputsDiv.empty(); // Effacer le contenu actuel
+                    count++
+                    for (var i = 1; i < count; i++) {
+                        dynamicInputsDiv.append(
+                            '<div class="mb-3">' +
+                                '<h1 class="mb-2">Layer ' + i + '</h1>' +
+                                '<div class="input-group">' +
+                                    '<button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Number of Neurons: Refers to the count of processing units in a neural network layer. Each neuron performs computations and passes the result to the next layer.">'+ 
+                                        '<i class="fa-solid fa-circle-info"></i></button>'+
+                                    '<span class="input-group-text" for="input' + i + '">Number of neurons  ' + '</span>' +
+                                    '<input name="neurone_couche'+i+'" type="number" value=1 min="1" max="300" oninput="validateNumberInput(this)" pattern="\d+" oninput="this.value = this.value.replace(/[^0-9]/g" class="form-control" id="input' + i + '" name="input' + i + '">' +
+                                '</div>' +
+                                '<div class="input-group mt-2">' +
+                                    '<button class="btn bg-gray-200 w-10 hover:bg-gray-200 info"  data-container="body" data-toggle="tooltip" data-placement="top" title="Activation Function: A function applied to the output of each neuron in a neural network. It introduces non-linearity and controls the output range of the neuron, enabling the network to learn complex patterns.">'+
+                                        '<i class="fa-solid fa-circle-info"></i></button>'+
+                                    '<span class="input-group-text" for="input' + i + '">Activation function ' + '</span>' +
+                                    '<select name="activation_function" class="form-select ">' +
+                                        '<option value="ReLU">ReLU</option>' +
+                                        '<option value="Softmax">Softmax</option>' +
+                                        '<option value="Sigmoid">Sigmoid</option>' +
+                                        '<option value="tanh">tanh</option>' +
+                                        '<option value="linear">linear</option>' +
+                                        '<option value="elu">elu</option>' +
+                                        '<option value="prelu">prelu</option>' +
+                                        '<option value="leaky_relu">leaky_relu</option>' +
+                                        '<option value="swish">swish</option>' +
+                                        '<option value="softplus">softplus</option>' +
+                                    '</select>' +
+                                '</div>' +
+                            '</div>'
+                        );
+                        $('.info').click(function (event) {
+                            // Empêchez l'action par défaut du lien
+                            event.preventDefault();
+                        });
+                        $(function () {
+                            $('[data-toggle="tooltip"]').tooltip()
+                        })
+                    }
+                }
+                generateDynamicInputs(1);
+            });
+            $('.info').click(function (event) {
+                // Empêchez l'action par défaut du lien
+                event.preventDefault();
+            });
+            function validateNumberInput(input) {
+                    // Remplace tous les caractères qui ne sont pas des chiffres par une chaîne vide
+                    input.value = input.value.replace(/[^0-9.]/g, '');
+                }
+        </script>
+</body>
+
+</html>
